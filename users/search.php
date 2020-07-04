@@ -1,5 +1,6 @@
 <?php
 session_start();
+$role = $_POST['role'];
 $link = mysqli_connect('localhost', 'root' , '','basa');
 $name = $_POST['name'];
 $surname = $_POST['surname'];
@@ -23,8 +24,8 @@ if (mysqli_num_rows($check_user) > 0)
 {
     if ($name == $user['name'])
     {
-        $sql = mysqli_query($link, "SELECT `id`, `name`, `surname`,`login`,`pass`,`lang`,`rol` FROM `user` WHERE `name` = '$name' AND `surname` = '$surname'");
-        while ($result = mysqli_fetch_array($sql))
+        $sql = mysqli_query($link, "SELECT `id`, `name`, `surname`,`login`,`pass`,`lang`,`rol` FROM `user` WHERE '$role' = ? ");
+        while ($result = mysqli_fetch_array($sql, "s", $_POST['search']))
          {
             echo '<tr>' .
                 "<td>{$result['id']}</td>" .
